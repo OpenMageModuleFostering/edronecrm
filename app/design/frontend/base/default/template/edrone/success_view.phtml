@@ -4,7 +4,6 @@ $helper = $this->getConfigHelper();
 $helper2 =  Mage::helper('edrone');
 $customerData = $this->getCustomerData();
 $orderData = $this->getOrderData();
-$this->sendDataToServer($orderData, $customerData);
 ?>
 
 <?php if(!empty($orderData)): ?>
@@ -12,7 +11,7 @@ $this->sendDataToServer($orderData, $customerData);
         (function (srcjs) {
             window._edrone = window._edrone || {};
             _edrone.app_id = '<?php echo $helper->getAppId() ?>';
-            _edrone.version = '1.1.18';
+            _edrone.version = '1.1.19';
             _edrone.platform = 'Magento';
             _edrone.platform_version = '<?php echo Mage::getVersion(); ?>';
             _edrone.trace_url = '<?php echo $helper->getCollectorUrl() ?>';

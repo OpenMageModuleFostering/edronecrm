@@ -8,7 +8,7 @@ class Edrone_Base_Helper_Config extends Mage_Core_Helper_Abstract
     const EXTERNAL_SCRIPT_URL_CONFIG_PATH = "edrone/base/external_script_url";
     const COLLECTOR_URL_CONFIG_PATH = "edrone/base/collector_url";
     const NEWSLETTER_SYNC_ENABLED_PATH = "edrone/newsletter/subscription_sync_enabled";
-
+    const SSSYNC = "edrone/base/serverside_order";
     /**
      * @return string
      */
@@ -16,7 +16,13 @@ class Edrone_Base_Helper_Config extends Mage_Core_Helper_Abstract
     {
         return (string)Mage::getStoreConfig(self::APP_ID_CONFIG_PATH);
     }
-
+    
+    /**
+     * @return boolean
+     */
+    public function isSSSync(){
+       return (boolean) Mage::getStoreConfig(self:: SSSYNC);
+    }
     /**
      * @return string
      */
