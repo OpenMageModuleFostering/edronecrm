@@ -10,27 +10,28 @@ $productData = $this->getProductData();
     (function (srcjs) {
         window._edrone = window._edrone || {};
         _edrone.app_id = '<?php echo $helper->getAppId() ?>';
-        _edrone.version = '1.0.9';
+        _edrone.version = '1.1.11';
         _edrone.platform = 'Magento';
         _edrone.platform_version = '<?php echo Mage::getVersion(); ?>';
         _edrone.trace_url = '<?php echo $helper->getCollectorUrl() ?>';
         _edrone.is_logged_in = '<?php echo $customerData['is_logged_in'] ?>';
         _edrone.email = '<?php echo $customerData['email'] ?>';
         _edrone.phone = '<?php echo $customerData['phone'] ?>';
-        _edrone.first_name = '<?php echo $customerData['first_name'] ?>';
-        _edrone.last_name = '<?php echo $customerData['last_name'] ?>';
+        _edrone.first_name = '<?php echo urlencode($customerData['first_name']); ?>';
+        _edrone.last_name = '<?php echo urlencode($customerData['last_name']); ?>';
         _edrone.product_skus = '<?php echo $productData['sku'] ?>';
-        _edrone.product_ids = '<?php echo $productData['id'] ?>';
-        _edrone.product_titles = '<?php echo $productData['title'] ?>';
-        _edrone.product_images = '<?php echo $productData['image'] ?>';
+        _edrone.product_ids = '';
+        _edrone.product_titles = '<?php echo urlencode($productData['title']); ?>';
+        _edrone.product_images = '<?php echo urlencode($productData['image']); ?>';
+        _edrone.product_urls   = window.location.href;
         _edrone.product_category_ids = '<?php echo $productData['product_category_ids'] ?>';
-        _edrone.product_category_names = '<?php echo $productData['product_category_names'] ?>';
+        _edrone.product_category_names = '<?php echo urlencode($productData['product_category_names']); ?>';
         _edrone.order_id = '';
         _edrone.order_payment_value = '';
         _edrone.currency = '';
         _edrone.action_type = 'product_view';
         _edrone.country = '<?php echo $customerData['country'] ?>';
-        _edrone.city = '<?php echo $customerData['city'] ?>';
+        _edrone.city = '<?php echo urlencode($customerData['city']); ?>';
         _edrone.subscriber_status = '<?php echo $customerData['subscriber_status'] ?>';
         _edrone.utc_time = '<?php echo $helper2->utcNow() ?>';
 
@@ -40,6 +41,25 @@ $productData = $this->getProductData();
         doc.src = ('https:' == document.location.protocol ? 'https:' : 'http:') + srcjs;
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(doc, s);
+        
+        window.isBasketForm = function(find, txt) {
+            txt = txt.split("?")[0];
+            return txt.substr(txt.length - find.length) == find;
+        }
+        
+        (function() {
+            var origOpen = XMLHttpRequest.prototype.open;
+            XMLHttpRequest.prototype.open = function() {
+            this.addEventListener('load', function() {
+                if (isBasketForm('ajaxcart/cart/add/', this.responseURL)) {                               
+                    _edrone.action_type = "add_to_cart";
+                    _edrone.init();
+                }
+            });
+            origOpen.apply(this, arguments);
+            };
+        })();
+     
 
     })("<?php echo $helper->getExternalScriptUrl() ?>");
 </script>

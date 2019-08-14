@@ -8,6 +8,14 @@ class Edrone_Base_Helper_Config extends Mage_Core_Helper_Abstract
     const EXTERNAL_SCRIPT_URL_CONFIG_PATH = "edrone/base/external_script_url";
     const COLLECTOR_URL_CONFIG_PATH = "edrone/base/collector_url";
     const NEWSLETTER_SYNC_ENABLED_PATH = "edrone/newsletter/subscription_sync_enabled";
+    const SERVER_SIDE_ORDER_PATH  = "edrone/base/serverside_order";
+    /**
+     * @return string
+     */
+    public function getServersideOrder()
+    {
+        return (string)Mage::getStoreConfig(self::SERVER_SIDE_ORDER_PATH);
+    }
 
     /**
      * @return string
