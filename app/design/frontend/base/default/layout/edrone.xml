@@ -26,4 +26,10 @@
             <block type="edrone/order" name="edrone" template="edrone/success_view.phtml"/>
         </reference>
     </checkout_onepage_success>
+
+    <checkout_onepage_index>
+        <reference name="head">
+            <action method="addJs"><script>edrone/edrone.js</script></action>
+        </reference>
+    </checkout_onepage_index>
 </layout>
