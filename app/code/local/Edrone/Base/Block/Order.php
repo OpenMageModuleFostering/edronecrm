@@ -316,6 +316,7 @@ class EdroneIns{
 		$this->preparedpack = array_merge($event->get(),array(
 				"app_id"	=>  $this->appid,
                                 "version"       =>  EDRONE_SDK_VERSION,
+                                "sender_type"   =>  'server',
 		));
                 //Calc sign - beta
                     ksort($this->preparedpack);
@@ -428,7 +429,7 @@ class Edrone_Base_Block_Order extends Edrone_Base_Block_Base
 
             $_Product = Mage::getModel("catalog/product")->load( $item->getProductId() );
             $categoryIds = $_Product->getCategoryIds();//array of product categories
-            $product_counts[] = settype($item->getQtyOrdered(), 'int');
+            $product_counts[] = (int)$item->getQtyOrdered();
             $categoryId = array_pop($categoryIds);
             if(is_numeric($categoryId)){
                 $category = Mage::getModel('catalog/category')->load($categoryId);

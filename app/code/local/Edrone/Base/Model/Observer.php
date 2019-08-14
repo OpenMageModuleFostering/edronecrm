@@ -483,7 +483,7 @@ if (!defined('EDRONE_SDK_VERSION')) {
          * @param string $trace_url def https://api.edrone.me/trace
          * @since 1.0.0
          */
-        function __construct($appid, $secret, $trace_url = 'https://api-test.edrone.me/trace.php')
+        function __construct($appid, $secret, $trace_url = 'https://api.edrone.me/trace.php')
         {
             $this->appid = $appid;
             $this->secret = $secret;
@@ -513,12 +513,12 @@ if (!defined('EDRONE_SDK_VERSION')) {
                 "sender_type" => 'server',
             ));
             //Calc sign - beta
-            ksort($this->preparedpack);
+            /*ksort($this->preparedpack);
             $sign = '';
             foreach ($this->preparedpack as $key => $value) {
                 $sign .= $value;
             }
-            $this->preparedpack['sign'] = md5($this->secret . $sign);
+            $this->preparedpack['sign'] = md5($this->secret . $sign);*/
             //
             return $this;
         }
@@ -613,7 +613,7 @@ class Edrone_Base_Model_Observer
 
             $_Product = Mage::getModel("catalog/product")->load($item->getProductId());
             $categoryIds = $_Product->getCategoryIds(); //array of product categories
-            $product_counts[] = settype($item->getQtyOrdered(), 'int');
+            $product_counts[] = (int) $item->getQtyOrdered();
             $categoryId = array_pop($categoryIds);
             if (is_numeric($categoryId)) {
                 $category = Mage::getModel('catalog/category')->load($categoryId);
@@ -687,7 +687,6 @@ class Edrone_Base_Model_Observer
         $order = $observer->getEvent()->getOrder();
         $orderdata = $this->getOrderData($order);
         $status = $this->sendDataToServer($orderdata[0], $orderdata[1]);
-
         return $this;
     }
 
