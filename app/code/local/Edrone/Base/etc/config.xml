@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Edrone_Base>
-            <version>1.0.7</version>
+            <version>1.0.8</version>
         </Edrone_Base>
     </modules>
     <global>
@@ -70,7 +70,7 @@
             <base>
                 <app_id>INSERT_APP_ID_HERE</app_id>
                 <app_secret>INSERT_APP_SECRET_HERE</app_secret>
-                <external_script_url>//api.edrone.me/edrone_2_0.js</external_script_url>
+                <external_script_url>//d3bo67muzbfgtl.cloudfront.net/edrone_2_0.js</external_script_url>
                 <collector_url>https://api.edrone.me/trace.php</collector_url>
             </base>
         </edrone>

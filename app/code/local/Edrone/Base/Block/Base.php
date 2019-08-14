@@ -27,6 +27,16 @@ class Edrone_Base_Block_Base extends Mage_Core_Block_Template
     {
         return $this->configHelper;
     }
+    /**
+     *     
+     *     Warning   Warning    Warning    Warning   Warning
+     * 
+     *     NEVER MAKE NEW METHOD CALLED getHelper
+     *     BECOUSE IT WILL OVERRIDE METHOD FROM BASE CLASS
+     *     
+     *     Warning   Warning    Warning    Warning   Warning
+     * 
+     */
     
 
     /**
