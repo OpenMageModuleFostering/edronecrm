@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Edrone_Base>
-            <version>1.0.8</version>
+            <version>1.0.9</version>
         </Edrone_Base>
     </modules>
     <global>

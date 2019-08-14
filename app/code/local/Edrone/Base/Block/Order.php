@@ -12,11 +12,25 @@ class Edrone_Base_Block_Order extends Edrone_Base_Block_Base
         $lastOrderId = Mage::getSingleton('checkout/session')->getLastOrderId();
         $order = Mage::getModel('sales/order')->load($lastOrderId);
 
+        $product_category_names = array();
+        $product_category_ids = array();
+        
+        
         foreach ($order->getAllVisibleItems() as $item) {
             $skus[] = $item->getSku();
             $ids[] = $item->getId();
             $titles[] = $item->getName();
 
+            $_Product = Mage::getModel("catalog/product")->load( $item->getId() );
+            $categoryIds = $_Product->getCategoryIds();//array of product categories
+            $categoryId = array_pop($categoryIds);
+            if(is_numeric($categoryId)){
+                $category = Mage::getModel('catalog/category')->load($categoryId);
+                $product_category_names[] = $category->getName();
+                $product_category_ids[]   = $categoryId; 
+            } 
+            
+            
             $product = $item->getProduct();
             if ($product) $images[] = (string)Mage::helper('catalog/image')->init($product, 'image')->resize(438);
         }
@@ -31,7 +45,8 @@ class Edrone_Base_Block_Order extends Edrone_Base_Block_Base
         $orderData['base_currency'] = $order->getBaseCurrencyCode();
         $orderData['order_currency'] = $order->getOrderCurrencyCode();
         $orderData['coupon'] = $order->getCouponCode();
-
+        $orderData['product_category_names']  = join('|',$product_category_names);
+        $orderData['product_category_ids']    = join('|',$product_category_ids);
 
         return $orderData;
     }

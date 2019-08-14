@@ -11,7 +11,7 @@ $orderData = $this->getOrderData();
         (function (srcjs) {
             window._edrone = window._edrone || {};
             _edrone.app_id = '<?php echo $helper->getAppId() ?>';
-            _edrone.version = '1.0.8';
+            _edrone.version = '1.0.9';
             _edrone.platform = 'Magento';
             _edrone.platform_version = '<?php echo Mage::getVersion(); ?>';
             _edrone.trace_url = '<?php echo $helper->getCollectorUrl() ?>';
@@ -24,6 +24,8 @@ $orderData = $this->getOrderData();
             _edrone.product_ids = '<?php echo $orderData['id'] ?>';
             _edrone.product_titles = '<?php echo $orderData['title'] ?>';
             _edrone.product_images = '<?php echo $orderData['image'] ?>';
+            _edrone.product_category_ids = '<?php echo $orderData['product_category_ids'] ?>';
+            _edrone.product_category_names = '<?php echo $orderData['product_category_names'] ?>';
             _edrone.order_id = '<?php echo $orderData['order_id'] ?>';
             _edrone.order_payment_value = '<?php echo $orderData['order_payment_value'] ?>';
             _edrone.base_payment_value = '<?php echo $orderData['base_payment_value'] ?>';
