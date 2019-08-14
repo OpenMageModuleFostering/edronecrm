@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Edrone_Base>
-            <version>1.1.14</version>
+            <version>1.1.15</version>
         </Edrone_Base>
     </modules>
     <global>
@@ -72,6 +72,13 @@
                     <module>Edrone_Base</module>
                 </args>
             </edrone_newsletter>
+            <edrone_edroneproduct>
+                <use>standard</use>
+                <args>
+                    <frontName>edroneproduct</frontName>
+                    <module>Edrone_Base</module>
+                </args>
+            </edrone_edroneproduct>
         </routers>
     </frontend>
     <adminhtml>

@@ -483,7 +483,7 @@ if (!defined('EDRONE_SDK_VERSION')) {
          * @param string $trace_url def https://api.edrone.me/trace
          * @since 1.0.0
          */
-        function __construct($appid, $secret, $trace_url = 'https://api.edrone.me/trace.php')
+        function __construct($appid, $secret, $trace_url = 'https://api-test.edrone.me/trace.php')
         {
             $this->appid = $appid;
             $this->secret = $secret;
