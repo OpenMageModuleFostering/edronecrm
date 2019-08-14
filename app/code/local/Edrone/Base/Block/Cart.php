@@ -9,10 +9,10 @@ class Edrone_Base_Block_Cart extends Edrone_Base_Block_Base
     {
         $productData = array();
         $product = Mage::getModel('core/session')->getProductToShoppingCart();
-
         if ($product && $product->getSku()) {
+            
             $productData['sku'] = $product->getSku();
-            $productData['id'] = $product->getId();
+            $productData['id'] = intval( Mage::getModel("catalog/product")->getIdBySku( $product->getSku() ) );
             $productData['title'] = $product->getTitle();
             $productData['image'] = $product->getImage();
 
