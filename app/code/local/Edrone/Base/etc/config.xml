@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Edrone_Base>
-            <version>1.0.10</version>
+            <version>1.0.1</version>
         </Edrone_Base>
     </modules>
     <global>
@@ -44,15 +44,6 @@
                 </observers>
             </checkout_cart_product_add_after>
         </events>
-        <routers>
-            <edrone_newsletter>
-                <use>standard</use>
-                <args>
-                    <frontName>edrone</frontName>
-                    <module>Edrone_Base</module>
-                </args>
-            </edrone_newsletter>
-        </routers>
     </frontend>
     <adminhtml>
         <translate>
@@ -69,9 +60,8 @@
         <edrone>
             <base>
                 <app_id>INSERT_APP_ID_HERE</app_id>
-                <app_secret>INSERT_APP_SECRET_HERE</app_secret>
-                <external_script_url>//d3bo67muzbfgtl.cloudfront.net/edrone_2_0.js</external_script_url>
-                <collector_url>https://api.edrone.me/trace</collector_url>
+                <external_script_url>//api.edrone.me/edrone_2_0.js</external_script_url>
+                <collector_url>https://api.edrone.me/trace.php</collector_url>
             </base>
         </edrone>
     </default>

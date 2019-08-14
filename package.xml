@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
     <name>edroneCRM</name>
-    <version>1.0.12</version>
+    <version>1.0.2</version>
     <stability>stable</stability>
     <license>GPL</license>
     <channel>community</channel>
@@ -10,9 +10,9 @@
     <description>edrone is collecting and analyzing Magento visitors and customers data. The plugin allows processing personal data in the real-time in order to communicate with them through dynamic and personalized e-mail.</description>
     <notes>edrone magento module - initial public release</notes>
     <authors><author><name>Micha&#x142; Blak</name><user>MAG002993376</user><email>michalblak@gmail.com</email></author></authors>
-    <date>2016-11-09</date>
-    <time>14:05:50</time>
-    <contents><target name="magelocal"><dir name="Edrone"><dir name="Base"><dir name="Block"><file name="Base.php" hash="d0e605725b25d2bf1bc2d27af954ab69"/><file name="Cart.php" hash="0f1243e1a6e886a8676a407e03e039ea"/><file name="Order.php" hash="629475518c89a89fa990157d463422ca"/><file name="Product.php" hash="6ed93a752b59228a0121cc0d6f8efe15"/></dir><dir name="Helper"><file name="Config.php" hash="194670e7ef6eb1dc89b8a61a38499264"/><file name="Data.php" hash="a9040014b1b54a1d3cc7ebf401f489c0"/></dir><dir name="Model"><file name="Observer.php" hash="f35c3bf591865d6db22e2477580df76c"/></dir><dir name="controllers"><file name="NewsletterController.php" hash="fa9e82363c785ce94e005a7aad141162"/></dir><dir name="etc"><file name="adminhtml.xml" hash="0e715e76c00295dc4e555411455fedfb"/><file name="config.xml" hash="1323c093110806ef1d4eb0092abc922b"/><file name="system.xml" hash="4651c48710b53d58c4b6af0da08f1d4e"/></dir></dir></dir></target><target name="magedesign"><dir name="frontend"><dir name="base"><dir name="default"><dir name="layout"><file name="edrone.xml" hash="48e37d1c01507337f8dc33eb9e03af34"/></dir></dir></dir></dir></target><target name="mageetc"><dir><dir name="modules"><file name="Edrone_Base.xml" hash="29d3699c3a83fa4fea848a6cb7800872"/></dir></dir></target><target name="magelocale"><dir name="pl_PL"><file name="Edrone.csv" hash="b8aa59d39815f4d92738129cc9fbdf34"/></dir></target></contents>
+    <date>2015-07-30</date>
+    <time>07:30:07</time>
+    <contents><target name="magelocal"><dir name="Edrone"><dir name="Base"><dir name="Block"><file name="Base.php" hash="c3fa1d3e32111ad7eef177904f2574dc"/><file name="Cart.php" hash="ed49bc87f960039570aa016c7c0fae6a"/><file name="Order.php" hash="ccc388d5210fc55c05ed320d8d0f4738"/><file name="Product.php" hash="174503941cc8dbabddf875a4001bc6fd"/></dir><dir name="Helper"><file name="Config.php" hash="5b0ffff08d4f2c8a3dfd08837732d776"/><file name="Data.php" hash="bd4dcfb429a76044eb2dab3958b89b15"/></dir><dir name="Model"><file name="Observer.php" hash="f35c3bf591865d6db22e2477580df76c"/></dir><dir name="etc"><file name="adminhtml.xml" hash="0e715e76c00295dc4e555411455fedfb"/><file name="config.xml" hash="800f2853c0c6b2f359687fff825e0efc"/><file name="system.xml" hash="08dd398842eb30b924f224ac4aa4609d"/></dir></dir></dir></target><target name="magedesign"><dir name="frontend"><dir name="base"><dir name="default"><dir name="template"><dir name="edrone"><file name="cart_view.phtml" hash="d403b1800d07b7347038726e9330a586"/><file name="default.phtml" hash="654fc889086ace8ae9ad875e18b35a8a"/><file name="product_view.phtml" hash="1c6049097f37d1e3d9d46395107e4fbc"/><file name="success_view.phtml" hash="e19868d5a413a225f51e27cbbae90d4d"/></dir></dir><dir name="layout"><file name="edrone.xml" hash="b08f6069d1a9a10c6e32a9757f9bc4cf"/></dir></dir></dir></dir></target><target name="mageetc"><dir><dir name="modules"><file name="Edrone_Base.xml" hash="4c5f7b0e7d7ab7ba79395f08d76f2f74"/></dir></dir></target><target name="magelocale"><dir name="pl_PL"><file name="Edrone.csv" hash="b8aa59d39815f4d92738129cc9fbdf34"/></dir></target></contents>
     <compatible/>
     <dependencies><required><php><min>5.1.0</min><max>6.0.0</max></php></required></dependencies>
 </package>

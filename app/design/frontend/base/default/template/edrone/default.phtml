@@ -1,0 +1,35 @@
+<?php
+/* @var $this Edrone_Base_Block_Base */
+$helper = $this->getConfigHelper();
+$customerData = $this->getCustomerData();
+?>
+
+<script type="text/javascript">
+    (function (srcjs) {
+        window._edrone = window._edrone || {};
+        _edrone.app_id = '<?php echo $helper->getAppId() ?>';
+        _edrone.version = '2.4';
+        _edrone.trace_url = '<?php echo $helper->getCollectorUrl() ?>';
+        _edrone.email = '<?php echo $customerData['email'] ?>';
+        _edrone.phone = '<?php echo $customerData['phone'] ?>';
+        _edrone.first_name = '<?php echo $customerData['first_name'] ?>';
+        _edrone.last_name = '<?php echo $customerData['last_name'] ?>';
+        _edrone.product_ids = '';
+        _edrone.product_titles = '';
+        _edrone.product_images = '';
+        _edrone.order_id = '';
+        _edrone.order_payment_value = '';
+        _edrone.currency = '';
+        _edrone.action_type = 'other';
+        _edrone.country = '<?php echo $customerData['country'] ?>';
+        _edrone.city = '<?php echo $customerData['city'] ?>';
+
+        var doc = document.createElement('script');
+        doc.type = 'text/javascript';
+        doc.async = true;
+        doc.src = ('https:' == document.location.protocol ? 'https:' : 'http:') + srcjs;
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(doc, s);
+
+    })("<?php echo $helper->getExternalScriptUrl() ?>");
+</script>

@@ -2,22 +2,22 @@
 
 class Edrone_Base_Block_Base extends Mage_Core_Block_Template
 {
+    const CUSTOMER_DATA_KEY = 'customerData';
 
     /**
      * @var Edrone_Base_Helper_Config
      */
-    private $configHelper;
+    private $helper;
 
     /**
      * @var array
      */
     protected $customerData = array();
 
-    public function _construct()
+    public function __construct()
     {
-        parent::_construct();
-
-        $this->configHelper = Mage::helper('edrone/config');
+        $this->helper = Mage::helper('edrone/config');
+        $this->customerData = Mage::registry(self::CUSTOMER_DATA_KEY);
     }
 
     /**
@@ -25,31 +25,22 @@ class Edrone_Base_Block_Base extends Mage_Core_Block_Template
      */
     public function getConfigHelper()
     {
-        return $this->configHelper;
+        return $this->helper;
     }
-    /**
-     *     
-     *     Warning   Warning    Warning    Warning   Warning
-     * 
-     *     NEVER MAKE NEW METHOD CALLED getHelper
-     *     BECOUSE IT WILL OVERRIDE METHOD FROM BASE CLASS
-     *     
-     *     Warning   Warning    Warning    Warning   Warning
-     * 
-     */
-    
 
     /**
      * @return array
      */
     public function getCustomerData()
     {
-        if(!count($this->customerData)) {
+        if (empty($this->customerData)) {
             if (Mage::getSingleton('customer/session')->isLoggedIn()) {
                 $this->getLoggedCustomerData();
             } else {
                 $this->getGuestCustomerData();
             }
+
+            Mage::register(self::CUSTOMER_DATA_KEY, $this->customerData);
         }
 
         return $this->customerData;
@@ -62,11 +53,6 @@ class Edrone_Base_Block_Base extends Mage_Core_Block_Template
         $this->customerData['first_name'] = $customer->getFirstname();
         $this->customerData['last_name'] = $customer->getLastname();
         $this->customerData['email'] = $customer->getEmail();
-        
-        $subscriber = Mage::getModel('newsletter/subscriber')->loadByEmail($customer->getEmail());
-        if($subscriber){
-            $this->customerData['subscriber_status'] = ( $subscriber->getStatus() == Mage_Newsletter_Model_Subscriber::STATUS_SUBSCRIBED ) ? 1 : 0;
-        }
 
         if ($address = $customer->getDefaultShippingAddress()) {
             $this->customerData['country'] = $address->getCountry();
@@ -77,8 +63,6 @@ class Edrone_Base_Block_Base extends Mage_Core_Block_Template
             $this->customerData['city'] = '';
             $this->customerData['phone'] = '';
         }
-
-        $this->customerData['is_logged_in'] = 1;
     }
 
     private function getGuestCustomerData()
@@ -89,21 +73,5 @@ class Edrone_Base_Block_Base extends Mage_Core_Block_Template
         $this->customerData['country'] = '';
         $this->customerData['city'] = '';
         $this->customerData['phone'] = '';
-
-        $quote = Mage::getModel('checkout/cart')->getQuote();
-        $address = $quote->getBillingAddress();
-
-        if($address) {
-            $this->customerData['first_name'] = $address->getFirstname();
-            $this->customerData['last_name'] = $address->getFirstname();
-            $this->customerData['email'] = $address->getFirstname();
-            $this->customerData['country'] = $address->getFirstname();
-            $this->customerData['city'] = $address->getFirstname();
-            $this->customerData['phone'] = $address->getTelephone();
-        }
-        $this->customerData['subscriber_status'] = '';
-        $this->customerData['is_logged_in'] = 0;
-
-
     }
 }
