@@ -11,7 +11,7 @@ $productData = $this->getProductData();
         (function (srcjs) {
             window._edrone = window._edrone || {};
             _edrone.app_id = '<?php echo $helper->getAppId() ?>';
-            _edrone.version = '1.1.11';
+            _edrone.version = '1.1.14';
             _edrone.platform = 'Magento';
             _edrone.platform_version = '<?php echo Mage::getVersion(); ?>';
             _edrone.trace_url = '<?php echo $helper->getCollectorUrl() ?>';
@@ -34,6 +34,7 @@ $productData = $this->getProductData();
             _edrone.city = '<?php echo urlencode($customerData['city']); ?>';
             _edrone.subscriber_status = '<?php echo $customerData['subscriber_status'] ?>';
             _edrone.utc_time = '<?php echo $helper2->utcNow() ?>';
+            
 
             var doc = document.createElement('script');
             doc.type = 'text/javascript';

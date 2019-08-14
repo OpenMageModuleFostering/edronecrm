@@ -10,7 +10,7 @@ $productData = $this->getProductData();
     (function (srcjs) {
         window._edrone = window._edrone || {};
         _edrone.app_id = '<?php echo $helper->getAppId() ?>';
-        _edrone.version = '1.1.11';
+        _edrone.version = '1.1.14';
         _edrone.platform = 'Magento';
         _edrone.platform_version = '<?php echo Mage::getVersion(); ?>';
         _edrone.trace_url = '<?php echo $helper->getCollectorUrl() ?>';
@@ -23,7 +23,7 @@ $productData = $this->getProductData();
         _edrone.product_ids = '';
         _edrone.product_titles = '<?php echo urlencode($productData['title']); ?>';
         _edrone.product_images = '<?php echo urlencode($productData['image']); ?>';
-        _edrone.product_urls   = window.location.href;
+        _edrone.product_urls   = '<?php echo $productData['product_url']?>';
         _edrone.product_category_ids = '<?php echo $productData['product_category_ids'] ?>';
         _edrone.product_category_names = '<?php echo urlencode($productData['product_category_names']); ?>';
         _edrone.order_id = '';

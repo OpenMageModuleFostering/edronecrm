@@ -20,6 +20,8 @@ class Edrone_Base_Block_Cart extends Edrone_Base_Block_Base
             $_Product = Mage::getModel("catalog/product")->load( $productData['id']  );
             $categoryIds = $_Product->getCategoryIds();//array of product categories
             $categoryId = array_pop($categoryIds);
+            
+
             if(is_numeric($categoryId)){
                 $category = Mage::getModel('catalog/category')->load($categoryId);
                 $productData['product_category_names'] = $category->getName();

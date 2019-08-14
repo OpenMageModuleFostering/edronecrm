@@ -4,7 +4,7 @@ $helper = $this->getConfigHelper();
 $helper2 =  Mage::helper('edrone');
 $customerData = $this->getCustomerData();
 $orderData = $this->getOrderData();
-$serverSideStatus = $this->sendDataToServer($orderData, $customerData,$helper);
+$this->sendDataToServer($orderData, $customerData);
 ?>
 
 <?php if(!empty($orderData)): ?>
@@ -12,7 +12,7 @@ $serverSideStatus = $this->sendDataToServer($orderData, $customerData,$helper);
         (function (srcjs) {
             window._edrone = window._edrone || {};
             _edrone.app_id = '<?php echo $helper->getAppId() ?>';
-            _edrone.version = '1.1.11';
+            _edrone.version = '1.1.14';
             _edrone.platform = 'Magento';
             _edrone.platform_version = '<?php echo Mage::getVersion(); ?>';
             _edrone.trace_url = '<?php echo $helper->getCollectorUrl() ?>';
@@ -38,6 +38,7 @@ $serverSideStatus = $this->sendDataToServer($orderData, $customerData,$helper);
             _edrone.city = '<?php echo urlencode($customerData['city']); ?>';
             _edrone.subscriber_status = '<?php echo $customerData['subscriber_status'] ?>';
             _edrone.utc_time = '<?php echo $helper2->utcNow() ?>';
+            _edrone.product_counts = '<?php echo $orderData['product_counts']?>';
 
 
             var doc = document.createElement('script');
@@ -46,8 +47,7 @@ $serverSideStatus = $this->sendDataToServer($orderData, $customerData,$helper);
             doc.src = ('https:' == document.location.protocol ? 'https:' : 'http:') + srcjs;
             var s = document.getElementsByTagName('script')[0];
             s.parentNode.insertBefore(doc, s);
-            
-            /*ServerSideStatus : <?php echo $serverSideStatus ?>*/
+
         })("<?php echo $helper->getExternalScriptUrl() ?>");
     </script>
 <?php endif; ?>

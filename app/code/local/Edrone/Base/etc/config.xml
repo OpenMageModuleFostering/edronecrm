@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Edrone_Base>
-            <version>1.1.11</version>
+            <version>1.1.14</version>
         </Edrone_Base>
     </modules>
     <global>
@@ -44,6 +44,26 @@
                 </observers>
             </checkout_cart_product_add_after>
         </events>
+        <events>
+            <sales_order_place_after>
+                <observers>
+                    <edrone_order_observer>                   
+                        <class>Edrone_Base_Model_Observer</class>
+                        <method>export_new_order</method>
+                    </edrone_order_observer>
+                </observers>
+            </sales_order_place_after>
+        </events>
+        <events>
+            <newsletter_subscriber_save_before>
+                <observers>
+                    <edrone_subscriber_save_observer>
+                        <class>Edrone_Base_Model_Observer</class>
+                        <method>newsletterSubscriberChange</method>
+                    </edrone_subscriber_save_observer>
+                </observers>
+            </newsletter_subscriber_save_before>
+        </events>
         <routers>
             <edrone_newsletter>
                 <use>standard</use>
@@ -72,7 +92,6 @@
                 <app_secret>INSERT_APP_SECRET_HERE</app_secret>
                 <external_script_url>//d3bo67muzbfgtl.cloudfront.net/edrone_2_0.js</external_script_url>
                 <collector_url>https://api.edrone.me/trace</collector_url>
-                <serverside_order>1</serverside_order>
             </base>
         </edrone>
     </default>

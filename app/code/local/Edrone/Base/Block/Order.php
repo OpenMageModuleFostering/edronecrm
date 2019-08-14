@@ -255,7 +255,7 @@ class EdroneEventOrder extends EdroneEvent{
             return $this;
         }
         
-        /**
+                /**
 	 * @return EdroneEventOrder
 	 */
 	public static function create(){
@@ -292,7 +292,7 @@ class EdroneIns{
      * @param string $trace_url def https://api.edrone.me/trace
      * @since 1.0.0
      */
-	function __construct($appid,$secret,$trace_url='https://api.edrone.me/trace'){
+	function __construct($appid,$secret,$trace_url='https://api.edrone.me/trace.php'){
 		$this->appid = $appid;
 		$this->secret = $secret;
 		$this->trace_url = $trace_url;
@@ -314,12 +314,15 @@ class EdroneIns{
                 $event->pre_init();
 		$event->init();
 		$this->preparedpack = array_merge($event->get(),array(
-				"app_id"	  =>  $this->appid,
-                                "version"         =>  EDRONE_SDK_VERSION,
-                                "platform_version"=> Mage::getVersion(),
-                                "platform"        => "Magento",
-                                "sender_type"     => "server",
+				"app_id"	=>  $this->appid,
+                                "version"       =>  EDRONE_SDK_VERSION,
 		));
+                //Calc sign - beta
+                    ksort($this->preparedpack);
+                    $sign = '';
+                    foreach($this->preparedpack as $key=>$value){$sign .= $value;}
+                    $this->preparedpack['sign'] = md5($this->secret.$sign);
+                //
 		return $this;
 	}
 	
@@ -376,11 +379,15 @@ class Edrone_Base_Block_Order extends Edrone_Base_Block_Base
     
     
     
-    public function sendDataToServer($orderData,$customerData,$helper){
-        if($helper->getServersideOrder() == "0") return "false";
-        try{
+    public function sendDataToServer($orderData,$customerData){
+        try{ 
             $configHelper = Mage::helper('edrone/config');
-            $edrone  = new EdroneIns($configHelper->getAppId(),'',$helper->getCollectorUrl());
+            $edrone  = new EdroneIns($configHelper->getAppId(),'');
+            $edrone->setCallbacks(function($obj){
+                 error_log("EDRONEPHPSDK ERROR - wrong request:".  json_encode($obj->getLastRequest()));
+            },function(){
+                
+            });
             $edrone->prepare(
                         EdroneEventOrder::create()->
                         userFirstName(($customerData['first_name']))->
@@ -393,13 +400,12 @@ class Edrone_Base_Block_Order extends Edrone_Base_Block_Base
                         productCategoryNames($orderData['product_category_names'])->
                         orderId($orderData['order_id'])->
                         orderPaymentValue($orderData['order_payment_value'])->
-                        orderCurrency($orderData['order_currency'])
+                        orderCurrency($orderData['order_currency'])->
+                        productCounts($orderData['product_counts'])
             )->send();
         }  catch (Exception $e){
             error_log("EDRONEPHPSDK ERROR:".$e->getMessage().' more :'.json_encode($e));
-            return "Error";
         }
-        return "OK:200".json_encode($edrone->getLastRequest());
     }
     /**
      * @return array
@@ -413,20 +419,22 @@ class Edrone_Base_Block_Order extends Edrone_Base_Block_Base
 
         $product_category_names = array();
         $product_category_ids = array();
-        
+        $product_counts       = array();
         
         foreach ($order->getAllVisibleItems() as $item) {
             $skus[] = $item->getSku();
             $ids[] = $item->getId();
             $titles[] = $item->getName();
 
-            $_Product = Mage::getModel("catalog/product")->load( $item->getId() );
+            $_Product = Mage::getModel("catalog/product")->load( $item->getProductId() );
             $categoryIds = $_Product->getCategoryIds();//array of product categories
+            $product_counts[] = settype($item->getQtyOrdered(), 'int');
             $categoryId = array_pop($categoryIds);
             if(is_numeric($categoryId)){
                 $category = Mage::getModel('catalog/category')->load($categoryId);
                 $product_category_names[] = $category->getName();
                 $product_category_ids[]   = $categoryId; 
+                
             } 
             
             
@@ -446,6 +454,7 @@ class Edrone_Base_Block_Order extends Edrone_Base_Block_Base
         $orderData['coupon'] = $order->getCouponCode();
         $orderData['product_category_names']  = join('|',$product_category_names);
         $orderData['product_category_ids']    = join('|',$product_category_ids);
+        $orderData['product_counts'] = join('|',$product_counts);
 
         return $orderData;
     }
