@@ -14,6 +14,7 @@ class Edrone_Base_Block_Order extends Edrone_Base_Block_Base
 
         foreach ($order->getAllVisibleItems() as $item) {
             $skus[] = $item->getSku();
+            $ids[] = $item->getId();
             $titles[] = $item->getName();
 
             $product = $item->getProduct();
@@ -21,6 +22,7 @@ class Edrone_Base_Block_Order extends Edrone_Base_Block_Base
         }
 
         $orderData['sku'] = join('|', $skus);
+        $orderData['id'] = join('|', $ids);
         $orderData['title'] = join('|', $titles);
         $orderData['image'] = join('|', $images);
         $orderData['order_id'] = $order->getIncrementId();

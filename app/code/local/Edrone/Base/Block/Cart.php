@@ -12,6 +12,7 @@ class Edrone_Base_Block_Cart extends Edrone_Base_Block_Base
 
         if ($product && $product->getSku()) {
             $productData['sku'] = $product->getSku();
+            $productData['id'] = $product->getId();
             $productData['title'] = $product->getTitle();
             $productData['image'] = $product->getImage();
 
