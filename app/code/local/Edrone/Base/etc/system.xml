@@ -15,8 +15,8 @@
             <show_in_website>1</show_in_website>
             <show_in_store>1</show_in_store>
 
-            <groups translate="label" module="edrone">
-                <base>
+            <groups>
+                <base translate="label" module="edrone">
                     <label>Edrone</label>
                     <tab>edrone</tab>
                     <sort_order>10</sort_order>

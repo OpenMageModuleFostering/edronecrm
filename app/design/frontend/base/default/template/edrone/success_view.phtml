@@ -1,6 +1,6 @@
 <?php
 /* @var $this Edrone_Base_Block_Order */
-$helper = $this->getHelper();
+$helper = $this->getConfigHelper();
 $customerData = $this->getCustomerData();
 $orderData = $this->getOrderData();
 ?>
@@ -20,7 +20,9 @@ $orderData = $this->getOrderData();
             _edrone.product_images = '<?php echo $orderData['image'] ?>';
             _edrone.order_id = '<?php echo $orderData['order_id'] ?>';
             _edrone.order_payment_value = '<?php echo $orderData['order_payment_value'] ?>';
-            _edrone.currency = '<?php echo $orderData['currency'] ?>';
+            _edrone.base_payment_value = '<?php echo $orderData['base_payment_value'] ?>';
+            _edrone.base_currency = '<?php echo $orderData['base_currency'] ?>';
+            _edrone.order_currency = '<?php echo $orderData['order_currency'] ?>';
             _edrone.action_type = 'order';
             _edrone.country = '<?php echo $customerData['country'] ?>';
             _edrone.city = '<?php echo $customerData['city'] ?>';

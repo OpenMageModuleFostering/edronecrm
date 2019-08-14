@@ -23,7 +23,9 @@ class Edrone_Base_Block_Order extends Edrone_Base_Block_Base
         $orderData['image'] = join('|', $images);
         $orderData['order_id'] = $order->getIncrementId();
         $orderData['order_payment_value'] = $order->getGrandTotal();
-        $orderData['currency'] = $order->getBaseCurrencyCode();
+        $orderData['base_payment_value'] = $order->getBaseGrandTotal();
+        $orderData['base_currency'] = $order->getBaseCurrencyCode();
+        $orderData['order_currency'] = $order->getOrderCurrencyCode();
 
         return $orderData;
     }

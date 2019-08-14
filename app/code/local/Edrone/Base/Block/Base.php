@@ -23,7 +23,7 @@ class Edrone_Base_Block_Base extends Mage_Core_Block_Template
     /**
      * @return Edrone_Base_Helper_Config
      */
-    public function getHelper()
+    public function getConfigHelper()
     {
         return $this->helper;
     }
