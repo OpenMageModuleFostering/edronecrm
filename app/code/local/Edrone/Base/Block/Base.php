@@ -7,10 +7,6 @@ class Edrone_Base_Block_Base extends Mage_Core_Block_Template
      * @var Edrone_Base_Helper_Config
      */
     private $configHelper;
-    /**
-     * @var Edrone_Base_Helper_Data
-     */
-    private $helper;
 
     /**
      * @var array
@@ -22,7 +18,6 @@ class Edrone_Base_Block_Base extends Mage_Core_Block_Template
         parent::_construct();
 
         $this->configHelper = Mage::helper('edrone/config');
-        $this->helper       = Mage::helper('edrone');
     }
 
     /**
@@ -33,13 +28,6 @@ class Edrone_Base_Block_Base extends Mage_Core_Block_Template
         return $this->configHelper;
     }
     
-    /**
-     * @return Edrone_Base_Helper_Data
-     */
-    public function getHelper()
-    {
-        return $this->helper;
-    }
 
     /**
      * @return array
@@ -65,10 +53,10 @@ class Edrone_Base_Block_Base extends Mage_Core_Block_Template
         $this->customerData['last_name'] = $customer->getLastname();
         $this->customerData['email'] = $customer->getEmail();
         
-        /*$subscriber = Mage::getModel('newsletter/subscriber')->loadByEmail($customer->getEmail());
+        $subscriber = Mage::getModel('newsletter/subscriber')->loadByEmail($customer->getEmail());
         if($subscriber){
             $this->customerData['subscriber_status'] = ( $subscriber->getStatus() == Mage_Newsletter_Model_Subscriber::STATUS_SUBSCRIBED ) ? 1 : 0;
-        }*/
+        }
 
         if ($address = $customer->getDefaultShippingAddress()) {
             $this->customerData['country'] = $address->getCountry();
@@ -103,7 +91,7 @@ class Edrone_Base_Block_Base extends Mage_Core_Block_Template
             $this->customerData['city'] = $address->getFirstname();
             $this->customerData['phone'] = $address->getTelephone();
         }
-
+        $this->customerData['subscriber_status'] = '';
         $this->customerData['is_logged_in'] = 0;
 
 

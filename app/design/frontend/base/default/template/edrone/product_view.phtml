@@ -1,7 +1,7 @@
 <?php
 /* @var $this Edrone_Base_Block_Product */
 $helper = $this->getConfigHelper();
-$helper2 = $this->getHelper();
+$helper2 =  Mage::helper('edrone');
 $customerData = $this->getCustomerData();
 $productData = $this->getProductData();
 ?>
@@ -10,7 +10,7 @@ $productData = $this->getProductData();
     (function (srcjs) {
         window._edrone = window._edrone || {};
         _edrone.app_id = '<?php echo $helper->getAppId() ?>';
-        _edrone.version = '1.0.5';
+        _edrone.version = '1.0.7';
         _edrone.platform = 'Magento';
         _edrone.platform_version = '<?php echo Mage::getVersion(); ?>';
         _edrone.trace_url = '<?php echo $helper->getCollectorUrl() ?>';
