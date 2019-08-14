@@ -592,6 +592,7 @@ class Edrone_Base_Model_Observer
             'sku' => $product->getSku(),
             'title' => $product->getName(),
             'image' => (string) Mage::helper('catalog/image')->init($product, 'image')->resize(438),
+            'id' => $product->getId(),
                 ))
         );
     }
@@ -607,24 +608,38 @@ class Edrone_Base_Model_Observer
 
 
         foreach ($order->getAllVisibleItems() as $item) {
-            $skus[] = $item->getSku();
-            $ids[] = $item->getId();
-            $titles[] = $item->getName();
+            $parentIds = Mage::getModel('catalog/product_type_configurable')->getParentIdsByChild($item->getProductId());
+            if(count($parentIds) > 0){
+                $product = Mage::getModel("catalog/product")->load( $parentIds[0] );
+                $skus[] = $product->getSku();
+                $ids[] = $product->getId();
+                $titles[] = $product->getName();
+                $categoryIds = $product->getCategoryIds();//array of product categories
+                $product_counts[] = (int)$item->getQtyOrdered();
+                $categoryId = array_pop($categoryIds);
+                if(is_numeric($categoryId)){
+                    $category = Mage::getModel('catalog/category')->load($categoryId);
+                    $product_category_names[] = $category->getName();
+                    $product_category_ids[]   = $categoryId; 
 
-            $_Product = Mage::getModel("catalog/product")->load($item->getProductId());
-            $categoryIds = $_Product->getCategoryIds(); //array of product categories
-            $product_counts[] = (int) $item->getQtyOrdered();
-            $categoryId = array_pop($categoryIds);
-            if (is_numeric($categoryId)) {
-                $category = Mage::getModel('catalog/category')->load($categoryId);
-                $product_category_names[] = $category->getName();
-                $product_category_ids[] = $categoryId;
+                } 
+                $images[] = ($product) ? (string)Mage::helper('catalog/image')->init($product, 'image')->resize(438) : '';
+            }else{
+                $product = Mage::getModel("catalog/product")->load( $item->getProductId() );
+                $skus[] = $product->getSku();
+                $ids[] = $product->getId();
+                $titles[] = $product->getName();  
+                $categoryIds = $product->getCategoryIds();//array of product categories
+                $product_counts[] = (int)$item->getQtyOrdered();
+                $categoryId = array_pop($categoryIds);
+                if(is_numeric($categoryId)){
+                    $category = Mage::getModel('catalog/category')->load($categoryId);
+                    $product_category_names[] = $category->getName();
+                    $product_category_ids[]   = $categoryId; 
+
+                } 
+                $images[] = ($product) ? (string)Mage::helper('catalog/image')->init($product, 'image')->resize(438) : '';
             }
-
-
-            $product = $item->getProduct();
-            if ($product)
-                $images[] = (string) Mage::helper('catalog/image')->init($product, 'image')->resize(438);
         }
         $orderData['order_id'] = $order->getIncrementId();
         $orderData['sku'] = join('|', $skus);

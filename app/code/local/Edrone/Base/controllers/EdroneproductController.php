@@ -7,7 +7,10 @@ class Edrone_Base_EdroneproductController extends Mage_Core_Controller_Front_Act
     public function skuAction(){
         $sku = Mage::app()->getRequest()->getParam('v');
         $product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
-        
+        $parentIds = Mage::getModel('catalog/product_type_configurable')->getParentIdsByChild($product->getId());
+        if(count($parentIds) > 0){
+            $product = Mage::getModel("catalog/product")->load( $parentIds[0] );
+        }
         $productArray['sku'] = $product->getSku();
         $productArray['id'] = $product->getId();
         $productArray['title'] = $product->getName();
@@ -32,7 +35,10 @@ class Edrone_Base_EdroneproductController extends Mage_Core_Controller_Front_Act
     public function idAction(){
         $id = Mage::app()->getRequest()->getParam('v');
         $product = Mage::getModel('catalog/product')->load($id);
-        
+        $parentIds = Mage::getModel('catalog/product_type_configurable')->getParentIdsByChild($product->getId());
+        if(count($parentIds) > 0){
+            $product = Mage::getModel("catalog/product")->load( $parentIds[0] );
+        }
         $productArray['sku'] = $product->getSku();
         $productArray['id'] = $product->getId();
         $productArray['title'] = $product->getName();
