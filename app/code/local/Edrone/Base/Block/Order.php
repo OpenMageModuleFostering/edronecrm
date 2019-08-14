@@ -15,7 +15,9 @@ class Edrone_Base_Block_Order extends Edrone_Base_Block_Base
         foreach ($order->getAllVisibleItems() as $item) {
             $skus[] = $item->getSku();
             $titles[] = $item->getName();
-            $images[] = (string)Mage::helper('catalog/image')->init($item->getProduct(), 'image')->resize(438);
+
+            $product = $item->getProduct();
+            if ($product) $images[] = (string)Mage::helper('catalog/image')->init($product, 'image')->resize(438);
         }
 
         $orderData['sku'] = join('|', $skus);
@@ -36,7 +38,6 @@ class Edrone_Base_Block_Order extends Edrone_Base_Block_Base
     {
         parent::getCustomerData();
 
-        if (empty($this->customerData['first_name'])) {
             $lastOrderId = Mage::getSingleton('checkout/session')->getLastOrderId();
             $order = Mage::getModel('sales/order')->load($lastOrderId);
 
@@ -45,7 +46,7 @@ class Edrone_Base_Block_Order extends Edrone_Base_Block_Base
             $this->customerData['email'] = $order->getBillingAddress()->getEmail();
             $this->customerData['country'] = $order->getBillingAddress()->getCountry();
             $this->customerData['city'] = $order->getBillingAddress()->getCity();
-        }
+            $this->customerData['phone'] = $order->getBillingAddress()->getTelephone();
 
         return $this->customerData;
     }

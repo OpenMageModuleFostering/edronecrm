@@ -10,8 +10,10 @@ $orderData = $this->getOrderData();
         (function (srcjs) {
             window._edrone = window._edrone || {};
             _edrone.app_id = '<?php echo $helper->getAppId() ?>';
-            _edrone.version = '2.4';
+            _edrone.version = '1.0.3';
+            _edrone.platform_version = '<?php echo Mage::getVersion(); ?>';
             _edrone.trace_url = '<?php echo $helper->getCollectorUrl() ?>';
+            _edrone.is_logged_in = '<?php echo $customerData['is_logged_in'] ?>';
             _edrone.email = '<?php echo $customerData['email'] ?>';
             _edrone.phone = '<?php echo $customerData['phone'] ?>';
             _edrone.first_name = '<?php echo $customerData['first_name'] ?>';
@@ -28,6 +30,7 @@ $orderData = $this->getOrderData();
             _edrone.action_type = 'order';
             _edrone.country = '<?php echo $customerData['country'] ?>';
             _edrone.city = '<?php echo $customerData['city'] ?>';
+
 
             var doc = document.createElement('script');
             doc.type = 'text/javascript';

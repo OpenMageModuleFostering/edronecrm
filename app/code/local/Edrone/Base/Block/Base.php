@@ -2,22 +2,22 @@
 
 class Edrone_Base_Block_Base extends Mage_Core_Block_Template
 {
-    const CUSTOMER_DATA_KEY = 'customerData';
 
     /**
      * @var Edrone_Base_Helper_Config
      */
-    private $helper;
+    private $configHelper;
 
     /**
      * @var array
      */
     protected $customerData = array();
 
-    public function __construct()
+    public function _construct()
     {
-        $this->helper = Mage::helper('edrone/config');
-        $this->customerData = Mage::registry(self::CUSTOMER_DATA_KEY);
+        parent::_construct();
+
+        $this->configHelper = Mage::helper('edrone/config');
     }
 
     /**
@@ -25,7 +25,7 @@ class Edrone_Base_Block_Base extends Mage_Core_Block_Template
      */
     public function getConfigHelper()
     {
-        return $this->helper;
+        return $this->configHelper;
     }
 
     /**
@@ -33,14 +33,12 @@ class Edrone_Base_Block_Base extends Mage_Core_Block_Template
      */
     public function getCustomerData()
     {
-        if (empty($this->customerData)) {
+        if(!count($this->customerData)) {
             if (Mage::getSingleton('customer/session')->isLoggedIn()) {
                 $this->getLoggedCustomerData();
             } else {
                 $this->getGuestCustomerData();
             }
-
-            Mage::register(self::CUSTOMER_DATA_KEY, $this->customerData);
         }
 
         return $this->customerData;
@@ -63,6 +61,8 @@ class Edrone_Base_Block_Base extends Mage_Core_Block_Template
             $this->customerData['city'] = '';
             $this->customerData['phone'] = '';
         }
+
+        $this->customerData['is_logged_in'] = 1;
     }
 
     private function getGuestCustomerData()
@@ -73,5 +73,21 @@ class Edrone_Base_Block_Base extends Mage_Core_Block_Template
         $this->customerData['country'] = '';
         $this->customerData['city'] = '';
         $this->customerData['phone'] = '';
+
+        $quote = Mage::getModel('checkout/cart')->getQuote();
+        $address = $quote->getBillingAddress();
+
+        if($address) {
+            $this->customerData['first_name'] = $address->getFirstname();
+            $this->customerData['last_name'] = $address->getFirstname();
+            $this->customerData['email'] = $address->getFirstname();
+            $this->customerData['country'] = $address->getFirstname();
+            $this->customerData['city'] = $address->getFirstname();
+            $this->customerData['phone'] = $address->getTelephone();
+        }
+
+        $this->customerData['is_logged_in'] = 0;
+
+
     }
 }
